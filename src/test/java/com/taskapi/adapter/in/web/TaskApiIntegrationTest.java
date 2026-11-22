@@ -119,6 +119,12 @@ class TaskApiIntegrationTest {
                 .andExpect(jsonPath("$.errors.title").exists());
     }
 
+    @Test
+    void frontendFilesArePublic() throws Exception {
+        mockMvc.perform(get("/index.html")).andExpect(status().isOk());
+        mockMvc.perform(get("/css/style.css")).andExpect(status().isOk());
+        mockMvc.perform(get("/js/app.js")).andExpect(status().isOk());
+    }
 
     // ---------- ajudantes ----------
 

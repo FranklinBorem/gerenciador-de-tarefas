@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gerenciador de Tarefas</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%85%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Tela de entrada -->
+  <main id="auth-view" class="auth" hidden>
+    <section class="card auth-card">
+      <h1>✅ Gerenciador de Tarefas</h1>
+      <p class="muted" id="auth-subtitle">Entre para ver suas tarefas.</p>
+
+      <form id="auth-form" novalidate>
+        <label id="name-field" hidden>Nome
+          <input id="auth-name" type="text" autocomplete="name">
+        </label>
+        <label>E-mail
+          <input id="auth-email" type="email" autocomplete="email" required>
+        </label>
+        <label>Senha
+          <input id="auth-password" type="password" autocomplete="current-password" minlength="6" required>
+        </label>
+
+        <p id="auth-error" class="form-error" role="alert" hidden></p>
+        <button id="auth-submit" class="btn primary" type="submit">Entrar</button>
+      </form>
+
+      <p class="muted center">
+        <span id="auth-switch-text">Ainda não tem conta?</span>
+        <button id="auth-switch" class="link" type="button">Criar conta</button>
+      </p>
+    </section>
+  </main>
+
+  <!-- Tela principal -->
+  <div id="app-view" class="container" hidden>
+    <header class="topbar">
+      <h1>✅ Minhas tarefas</h1>
+      <div class="user">
+        <span id="user-email" class="muted"></span>
+        <button id="logout" class="btn ghost" type="button">Sair</button>
+      </div>
+    </header>
+
+    <div class="controls">
+      <div id="filters" class="filters" role="group" aria-label="Filtrar por status"></div>
+      <button id="new-task" class="btn primary" type="button">+ Nova tarefa</button>
+    </div>
+
+    <p id="summary" class="muted small"></p>
+    <ul id="task-list" class="task-list" aria-live="polite"></ul>
+
+    <nav id="pagination" class="pagination" aria-label="Páginas" hidden>
+      <button id="prev" class="btn ghost" type="button">← Anterior</button>
+      <span id="page-info" class="muted small"></span>
+      <button id="next" class="btn ghost" type="button">Próxima →</button>
+    </nav>
+  </div>
+
+  <!-- Formulário de criar e editar -->
+  <dialog id="task-dialog">
+    <form id="task-form" novalidate>
+      <h2 id="dialog-title">Nova tarefa</h2>
+      <label>Título
+        <input id="task-title" type="text" maxlength="120" required>
+      </label>
+      <label>Descrição
+        <textarea id="task-description" rows="3" maxlength="1000"></textarea>
+      </label>
+      <label>Prazo
+        <input id="task-due" type="date">
+      </label>
+      <p id="task-error" class="form-error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button id="task-cancel" class="btn ghost" type="button">Cancelar</button>
+        <button class="btn primary" type="submit">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
