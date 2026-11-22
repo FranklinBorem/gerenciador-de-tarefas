@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: task-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/taskdb}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:troque-esta-chave-por-uma-bem-longa-com-pelo-menos-32-caracteres}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:1440}
