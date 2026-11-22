@@ -68,9 +68,9 @@ public class TaskController {
 
     @GetMapping
     public PageResponse<TaskResponse> list(@AuthenticationPrincipal User user,
-                                           @RequestParam(required = false) TaskStatus status,
-                                           @RequestParam(defaultValue = "0") int page,
-                                           @RequestParam(defaultValue = "10") int size) {
+                                           @RequestParam(name = "status", required = false) TaskStatus status,
+                                           @RequestParam(name = "page", defaultValue = "0") int page,
+                                           @RequestParam(name = "size", defaultValue = "10") int size) {
         PageResult<Task> result = listTasks.list(user.getId(), status, page, size);
         return new PageResponse<>(
                 result.content().stream().map(TaskResponse::from).toList(),
@@ -78,13 +78,13 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public TaskResponse get(@AuthenticationPrincipal User user, @PathVariable Long id) {
+    public TaskResponse get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         return TaskResponse.from(getTask.get(user.getId(), id));
     }
 
     @PutMapping("/{id}")
     public TaskResponse update(@AuthenticationPrincipal User user,
-                               @PathVariable Long id,
+                               @PathVariable("id") Long id,
                                @Valid @RequestBody TaskRequest request) {
         Task task = updateTask.update(user.getId(), id,
                 new UpdateTaskUseCase.Command(request.title(), request.description(), request.dueDate()));
@@ -93,14 +93,14 @@ public class TaskController {
 
     @PatchMapping("/{id}/status")
     public TaskResponse changeStatus(@AuthenticationPrincipal User user,
-                                     @PathVariable Long id,
+                                     @PathVariable("id") Long id,
                                      @Valid @RequestBody StatusRequest request) {
         return TaskResponse.from(changeTaskStatus.changeStatus(user.getId(), id, request.status()));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@AuthenticationPrincipal User user, @PathVariable Long id) {
+    public void delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         deleteTask.delete(user.getId(), id);
     }
 }
